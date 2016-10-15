@@ -49,3 +49,21 @@ h1 {
 .main-list li {
   padding: 15px 60px 15px 15px;
 }
+
+.change-input {
+  background-color: transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: 24px;
+  line-height: 30px;
+  padding: 15px 60px 15px 15px;
+  margin-left: 45px;
+  position: relative;
+  color: inherit;
+  width: 427px;
+}
+
+.change-input:required:focus {
+  border: none;
+  outline: none;
+}
