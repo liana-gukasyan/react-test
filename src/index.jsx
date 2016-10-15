@@ -31,9 +31,9 @@ class TodoApp extends React.Component {
 				this.props.onTaskEdit(task.id, 'ururu')
 			}
 			return (
-				<div key={task.id} onDoubleClick={onTaskEdit}>
+				<li key={task.id} onDoubleClick={onTaskEdit}>
 					{task.text}
-				</div>
+				</li>
 			)
 		})
 		return tasks
@@ -42,9 +42,12 @@ class TodoApp extends React.Component {
   render() {
   	let tasks = this.renderTasks()
     return (
-      <div>
-      	{tasks}
-      </div>
+    	<section className='main-part'>
+	    	<h1>todos</h1>
+	      <ul className='main-list'>
+	      	{tasks}
+	      </ul>
+      </section>
     )
   }
 }
@@ -53,7 +56,7 @@ function renderAll() {
 	render(
 		<TodoApp tasks={tasks}
 						 onTaskEdit={onTaskEdit}/>,
-		document.getElementById('container'))
+		document.getElementsByClassName('container')[0])
 }
 
 renderAll()

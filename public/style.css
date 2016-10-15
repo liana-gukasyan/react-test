@@ -1,0 +1,51 @@
+body {
+	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+    font-variant-numeric: normal;
+    font-weight: 300;
+    font-stretch: normal;
+    font-size: 14px;
+    line-height: 1.4em;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	color: #4d4d4d;
+	background: #f5f5f5;
+	line-height: 1.4em;
+	margin: 0 auto;
+	padding: 0;
+  min-width: 230px;
+  max-width: 550px;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  position: absolute;
+  top: -166px;
+  width: 100%;
+  font-size: 100px;
+  font-weight: 100;
+  text-align: center;
+  color: rgba(175, 47, 47, 0.15);
+  -moz-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+}
+
+.main-part {
+  margin: 130px 0 40px 0;
+  background-color: #FFF;
+  position: relative;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+}
+
+.main-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 24px;
+}
+
+.main-list li {
+  padding: 15px 60px 15px 15px;
+}
