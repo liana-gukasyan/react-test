@@ -36,6 +36,12 @@ function handleEdit(id, newText) {
   renderAll()
 }
 
+function removeTask(idForDel) {
+  let indexOfDelEl = findIndex(idForDel)
+  tasks.splice(indexOfDelEl, 1)
+  renderAll()
+}
+
 const ESCAPE_KEY = 27
 const ENTER_KEY = 13
 const CANCEL_CHANGE = -1
@@ -44,9 +50,9 @@ const CANCEL_CHANGE = -1
 class TodoItem extends React.Component {
   renderTask() {
     let taskText = this.props.text
-    let onTaskToggleEdit = (e) => {
-      this.props.onTaskToggleEdit()
-    }
+    let handleRemoveTask = this.props.handleRemoveTask
+    let onTaskToggleEdit = this.props.onTaskToggleEdit
+
     let handleEdit = (e) => {
       let newText = this.refs.editTask.value
       this.props.handleEditText(newText)
@@ -66,7 +72,7 @@ class TodoItem extends React.Component {
              onDoubleClick={onTaskToggleEdit}>
           <input className='check-input' type='checkbox'></input>
           <label className='item-label'>{taskText}</label>
-          <button className='close'></button>
+          <button className='close' onClick={handleRemoveTask}></button>
         </div>
       </li>
     )
@@ -107,7 +113,8 @@ class TodoApp extends React.Component {
                        isEditing={isEditing}
                        onTaskEscEdit={_ => this.props.onTaskToggleEdit(CANCEL_CHANGE)}
                        onTaskToggleEdit={_ => this.props.onTaskToggleEdit(taskId)}
-                       handleEditText={newText => this.props.handleEdit(taskId, newText)}/>
+                       handleEditText={newText => this.props.handleEdit(taskId, newText)}
+                       handleRemoveTask={_ => this.props.removeTask(taskId)}/>
     })
     return tasks
   }
@@ -143,6 +150,7 @@ function renderAll() {
              editingItemId={editingItemId} 
              onTaskToggleEdit={onTaskToggleEdit}
              handleEdit={handleEdit}
+             removeTask={removeTask}
              />,
     document.getElementsByClassName('container')[0])
 }
