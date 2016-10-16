@@ -148,7 +148,6 @@ li div {
   border: none;
   background: rgba(0, 0, 0, 0.003);
   box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
-  font-style: italic;
   position: relative;
   margin: 0;
   width: 100%;
@@ -156,10 +155,18 @@ li div {
   font-family: inherit;
   font-weight: inherit;
   line-height: 1.4em;
-  color: #d9d9d9;
   box-sizing: border-box;
   outline: none;
   -webkit-font-smoothing: antialiased;
+  color: #4d4d4d;
+}
+
+.push-input:-moz-placeholder,
+.push-input::-moz-placeholder,
+.push-input:-ms-input-placeholder,
+.push-input::-webkit-input-placeholder {
+  color: #d9d9d9;
+  font-style: italic;
 }
 
 .filter-footer {

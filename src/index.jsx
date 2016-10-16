@@ -50,9 +50,20 @@ function completeTask(id) {
   renderAll()
 }
 
+function createTask(text) {
+  let tempTask = {}
+  tempTask.text = text
+  tempTask.completed = false
+  tempTask.id = idForNewTask
+  idForNewTask = idForNewTask + 1
+  tasks.push(tempTask)
+  renderAll()
+}
+
 const ESCAPE_KEY = 27
 const ENTER_KEY = 13
 const CANCEL_CHANGE = -1
+let idForNewTask = 100
 
 class TodoItem extends React.Component {
   renderTask() {
@@ -144,13 +155,23 @@ class TodoApp extends React.Component {
 
   render() {
     let tasks = this.renderTasks()
+    let onKeyDown = (e) => {
+      if (e.which === ENTER_KEY) {
+        let newText = this.refs.pushInput.value
+        this.props.createTask(newText)
+        this.refs.pushInput.value = ''
+      }
+    }
+    
     return (
       <section className='main-part'>
         <header className='header'>
           <h1>todos</h1>
           <input className='push-input'
             placeholder='What needs to be done?'
-            autoFocus={true} />
+            autoFocus={true} 
+            onKeyDown={onKeyDown}
+            ref='pushInput'/>
         </header>
         <ul className='main-list'>
           {tasks}
@@ -175,7 +196,7 @@ function renderAll() {
              handleEdit={handleEdit}
              removeTask={removeTask}
              completeTask={completeTask}
-             />,
+             createTask={createTask}/>,
     document.getElementsByClassName('container')[0])
 }
 
