@@ -39,54 +39,74 @@ function handleEdit(id, newText) {
 const ESCAPE_KEY = 27
 const ENTER_KEY = 13
 
+
+class TodoItem extends React.Component {
+  renderTask() {
+    let taskText = this.props.text
+    let onTaskToggleEdit = (e) => {
+      this.props.onTaskToggleEdit()
+    }
+    let handleEdit = (e) => {
+      let newText = this.refs.editTask.value
+      this.props.handleEditText(newText)
+    }
+    let handleKeyDown = (e) => {
+      if (e.which === ESCAPE_KEY) {
+        this.props.onTaskEscEdit()
+      } else if (e.which === ENTER_KEY) {
+        let newText = this.refs.editTask.value
+        this.props.handleEditText(newText)
+      }
+    }
+
+    let taskElement = (
+      <li>
+        <div className='item'
+             onDoubleClick={onTaskToggleEdit}>
+          <input className='check-input' type='checkbox'></input>
+          <label className='item-label'>{taskText}</label>
+          <button className='close'></button>
+        </div>
+      </li>
+    )
+    let inputElement = (
+      <li>
+        <div className='item'
+             onDoubleClick={onTaskToggleEdit}>
+          <input className='check-input' type='checkbox'></input>
+          <input ref='editTask'
+                 className='change-input'
+                 defaultValue={taskText}
+                 onBlur={handleEdit}
+                 onKeyDown={handleKeyDown}
+                 autoFocus={true}/>
+        </div>
+      </li>
+    )
+
+    return this.props.isEditing ? inputElement : taskElement
+  }
+
+  render() {
+    let task = this.renderTask()
+    return task
+  }
+}
+
 class TodoApp extends React.Component {
   renderTasks() {
     let editingItemId = this.props.editingItemId
     let tasks = this.props.tasks.map((task) => {
       let taskId = task.id
-      let onTaskToggleEdit = (e) => {
-        this.props.onTaskToggleEdit(taskId)
-      }
-      let handleEdit = (e) => {
-        let newText = this.refs.editTask.value
-        this.props.handleEdit(taskId, newText)
-      }
-      let handleKeyDown = (e) => {
-        if (e.which === ESCAPE_KEY) {
-          this.props.onTaskToggleEdit(-1)
-        } else if (e.which === ENTER_KEY) {
-          let newText = this.refs.editTask.value
-          handleEdit(taskId, newText)
-        }
-      }
       let isEditing = editingItemId == taskId
-      let taskElement = (
-        <li key={taskId}>
-          <div className='item'
-               onDoubleClick={onTaskToggleEdit}>
-            <input className='check-input' type='checkbox'></input>
-            <label className='item-label'>{task.text}</label>
-            <button className='close'></button>
-          </div>
-        </li>
-      )
-      let inputElement = (
-        <li key={taskId}>
-          <div className='item'
-               onDoubleClick={onTaskToggleEdit}>
-            <input className='check-input' type='checkbox'></input>
-            <input ref='editTask'
-                   className='change-input'
-                   key={taskId} 
-                   defaultValue={task.text}
-                   onBlur={handleEdit}
-                   onKeyDown={handleKeyDown}
-                   autoFocus={true}/>
-          </div>
-        </li>
-      )
 
-      return isEditing ? inputElement : taskElement
+      return <TodoItem key={taskId}
+                       text={task.text}
+                       completed={task.completed}
+                       isEditing={isEditing}
+                       onTaskEscEdit={_ => this.props.onTaskToggleEdit(-1)}
+                       onTaskToggleEdit={_ => this.props.onTaskToggleEdit(taskId)}
+                       handleEditText={newText => this.props.handleEdit(taskId, newText)}/>
     })
     return tasks
   }
