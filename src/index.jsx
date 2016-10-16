@@ -60,18 +60,31 @@ class TodoApp extends React.Component {
         }
       }
       let isEditing = editingItemId == taskId
-      let taskElement = <li key={taskId} onDoubleClick={onTaskToggleEdit}>
-                     {task.text}</li>
-
-      let inputElement = <input
-            ref='editTask'
-            className='change-input'
-            key={taskId} 
-            defaultValue={task.text}
-            onBlur={handleEdit}
-            onKeyDown={handleKeyDown}
-            autoFocus={true}
-          />
+      let taskElement = (
+        <li key={taskId}>
+          <div className='item'
+               onDoubleClick={onTaskToggleEdit}>
+            <input className='check-input' type='checkbox'></input>
+            <label className='item-label'>{task.text}</label>
+            <button className='close'></button>
+          </div>
+        </li>
+      )
+      let inputElement = (
+        <li key={taskId}>
+          <div className='item'
+               onDoubleClick={onTaskToggleEdit}>
+            <input className='check-input' type='checkbox'></input>
+            <input ref='editTask'
+                   className='change-input'
+                   key={taskId} 
+                   defaultValue={task.text}
+                   onBlur={handleEdit}
+                   onKeyDown={handleKeyDown}
+                   autoFocus={true}/>
+          </div>
+        </li>
+      )
 
       return isEditing ? inputElement : taskElement
     })
@@ -82,10 +95,22 @@ class TodoApp extends React.Component {
     let tasks = this.renderTasks()
     return (
       <section className='main-part'>
-        <h1>todos</h1>
+        <header className='header'>
+          <h1>todos</h1>
+          <input className='push-input'
+            placeholder='What needs to be done?'
+            autoFocus={true} />
+        </header>
         <ul className='main-list'>
           {tasks}
         </ul>
+        <footer className='filter-footer'>
+          <ul className='filters'>
+            <li><a href='#' className='filter-div-item filter-all filter-div-item-current'>All</a></li>
+            <li><a href='#active' className='filter-div-item filter-active'>Active</a></li>
+            <li><a href='#completed' className='filter-div-item filter-completed'>Completed</a></li>
+          </ul>
+        </footer>
       </section>
     )
   }
