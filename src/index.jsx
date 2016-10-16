@@ -1,5 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
+import classNames from 'classnames'
 
 let tasks = [
   {id: '1', text: 'Make some coding', completed: true},
@@ -42,10 +43,16 @@ function removeTask(idForDel) {
   renderAll()
 }
 
+function completeTask(id) {
+  let taskIndex = findIndex(id)
+  let currentTask = tasks[taskIndex]
+  currentTask.completed = !currentTask.completed
+  renderAll()
+}
+
 const ESCAPE_KEY = 27
 const ENTER_KEY = 13
 const CANCEL_CHANGE = -1
-
 
 class TodoItem extends React.Component {
   renderTask() {
@@ -66,11 +73,22 @@ class TodoItem extends React.Component {
       }
     }
 
+    let taskElementClasses = classNames({
+      'item': true,
+      'completed': this.props.completed
+    })
+
+    let handleCompleteItem = this.props.handleCompleteTask
+
     let taskElement = (
       <li>
-        <div className='item'
+        <div className={taskElementClasses}
              onDoubleClick={onTaskToggleEdit}>
-          <input className='check-input' type='checkbox'></input>
+          <input className='check-input'
+                 type='checkbox'
+                 onClick={handleCompleteItem}
+                 defaultChecked={this.props.completed}>
+          </input>
           <label className='item-label'>{taskText}</label>
           <button className='close' onClick={handleRemoveTask}></button>
         </div>
@@ -80,7 +98,11 @@ class TodoItem extends React.Component {
       <li>
         <div className='item'
              onDoubleClick={onTaskToggleEdit}>
-          <input className='check-input' type='checkbox'></input>
+          <input className='check-input'
+                 type='checkbox'
+                 onClick={handleCompleteItem}
+                 defaultChecked={this.props.completed}>
+          </input>
           <input ref='editTask'
                  className='change-input'
                  defaultValue={taskText}
@@ -114,7 +136,8 @@ class TodoApp extends React.Component {
                        onTaskEscEdit={_ => this.props.onTaskToggleEdit(CANCEL_CHANGE)}
                        onTaskToggleEdit={_ => this.props.onTaskToggleEdit(taskId)}
                        handleEditText={newText => this.props.handleEdit(taskId, newText)}
-                       handleRemoveTask={_ => this.props.removeTask(taskId)}/>
+                       handleRemoveTask={_ => this.props.removeTask(taskId)}
+                       handleCompleteTask={_ => this.props.completeTask(taskId)}/>
     })
     return tasks
   }
@@ -151,6 +174,7 @@ function renderAll() {
              onTaskToggleEdit={onTaskToggleEdit}
              handleEdit={handleEdit}
              removeTask={removeTask}
+             completeTask={completeTask}
              />,
     document.getElementsByClassName('container')[0])
 }

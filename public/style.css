@@ -195,3 +195,8 @@ li div {
 .filter-div-item-current {
   border-color: rgba(175, 47, 47, 0.2);
 }
+
+.completed {
+  color: #d9d9d9;
+  text-decoration: line-through;
+}
