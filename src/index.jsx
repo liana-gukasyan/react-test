@@ -8,7 +8,7 @@ let tasks = [
 let editingItemId = null
 
 function findIndex(id) {
-  var tempInd = -1
+  var tempInd = CANCEL_CHANGE
   tasks.forEach(function(item, i, tasks) {
     if (item.id == id) {
       tempInd = i
@@ -19,11 +19,11 @@ function findIndex(id) {
 
 function onTaskToggleEdit(id) {
   let taskIndex = findIndex(id)
-  if (taskIndex != -1) {
+  if (taskIndex != CANCEL_CHANGE) {
     let currentTask = tasks[taskIndex]
     editingItemId = id
   } else {
-    editingItemId = -1
+    editingItemId = CANCEL_CHANGE
   }
   renderAll()
 }
@@ -32,12 +32,13 @@ function handleEdit(id, newText) {
   let taskIndex = findIndex(id)
   let currentTask = tasks[taskIndex]
   currentTask.text = newText
-  editingItemId = -1
+  editingItemId = CANCEL_CHANGE
   renderAll()
 }
 
 const ESCAPE_KEY = 27
 const ENTER_KEY = 13
+const CANCEL_CHANGE = -1
 
 
 class TodoItem extends React.Component {
@@ -104,7 +105,7 @@ class TodoApp extends React.Component {
                        text={task.text}
                        completed={task.completed}
                        isEditing={isEditing}
-                       onTaskEscEdit={_ => this.props.onTaskToggleEdit(-1)}
+                       onTaskEscEdit={_ => this.props.onTaskToggleEdit(CANCEL_CHANGE)}
                        onTaskToggleEdit={_ => this.props.onTaskToggleEdit(taskId)}
                        handleEditText={newText => this.props.handleEdit(taskId, newText)}/>
     })
