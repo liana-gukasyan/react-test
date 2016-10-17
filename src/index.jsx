@@ -134,9 +134,38 @@ class TodoItem extends React.Component {
 }
 
 class TodoApp extends React.Component {
+  constructor() {
+    super()
+    let hashStatus = window.location.hash
+    
+    if (hashStatus == '#completed') {
+      this.state = { mode: 'completed' }
+    } else if (hashStatus == '#active') {
+      this.state = { mode: 'active' }
+    } else {
+      this.state = { mode: 'all' }
+    } 
+  }
+
+  changeMode(modeName) {
+    this.setState({mode: modeName})
+  }
+
   renderTasks() {
     let editingItemId = this.props.editingItemId
-    let tasks = this.props.tasks.map((task) => {
+
+    let tempTasks = []
+    let filterTasks = (task) => {
+      if (this.state.mode == 'completed') {
+        return task.completed
+      }
+      if (this.state.mode == 'active') {
+        return !(task.completed)
+      }
+      return true
+    }
+    let tasks = this.props.tasks.filter(filterTasks).map((task) => {
+      
       let taskId = task.id
       let isEditing = editingItemId == taskId
 
@@ -150,11 +179,13 @@ class TodoApp extends React.Component {
                        handleRemoveTask={_ => this.props.removeTask(taskId)}
                        handleCompleteTask={_ => this.props.completeTask(taskId)}/>
     })
+    
     return tasks
   }
 
   render() {
     let tasks = this.renderTasks()
+
     let onKeyDown = (e) => {
       if (e.which === ENTER_KEY) {
         let newText = this.refs.pushInput.value
@@ -162,7 +193,14 @@ class TodoApp extends React.Component {
         this.refs.pushInput.value = ''
       }
     }
-    
+
+    let getStylesForFilter = (mode) => {
+      return classNames({
+        'filter-div-item': true,
+        'filter-div-item-current': this.state.mode == mode
+      })
+    }
+
     return (
       <section className='main-part'>
         <header className='header'>
@@ -178,9 +216,15 @@ class TodoApp extends React.Component {
         </ul>
         <footer className='filter-footer'>
           <ul className='filters'>
-            <li><a href='#' className='filter-div-item filter-all filter-div-item-current'>All</a></li>
-            <li><a href='#active' className='filter-div-item filter-active'>Active</a></li>
-            <li><a href='#completed' className='filter-div-item filter-completed'>Completed</a></li>
+            <li><a href='#'
+                   className={getStylesForFilter('all')}
+                   onClick={() => this.changeMode('all')}>All</a></li>
+            <li><a href='#active'
+                   className={getStylesForFilter('active')}
+                   onClick={() => this.changeMode('active')}>Active</a></li>
+            <li><a href='#completed'
+                   className={getStylesForFilter('completed')}
+                   onClick={() => this.changeMode('completed')}>Completed</a></li>
           </ul>
         </footer>
       </section>
