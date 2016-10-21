@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import classNames from 'classnames'
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 import TodoItem from './TodoItem'
 import TodoApp from './TodoApp'
@@ -66,15 +67,29 @@ function createTask(text) {
 const CANCEL_CHANGE = -1
 let idForNewTask = 100
 
-function renderAll() {
-  render(
-    <TodoApp tasks={tasks}
-             editingItemId={editingItemId} 
+let todoListWrapper = React.createClass({
+  render: function () {
+    return (
+        <TodoApp 
+             {...this.props} 
+             tasks={tasks}
+             editingItemId={editingItemId}
              onTaskToggleEdit={onTaskToggleEdit}
              handleEdit={handleEdit}
              removeTask={removeTask}
              completeTask={completeTask}
-             createTask={createTask}/>,
+             createTask={createTask}/>
+    )
+  }
+})
+
+function renderAll() {
+  render(
+    <div>
+    <Router history={browserHistory}>
+      <Route path='/(:modeName)' component={todoListWrapper}></Route>
+    </Router>
+    </div>,
     document.getElementsByClassName('container')[0])
 }
 
