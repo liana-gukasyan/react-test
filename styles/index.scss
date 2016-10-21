@@ -1,22 +1,19 @@
+$general-color: #4d4d4d;
+$general-font-size: 24px;
+$item-margin-left: 45px;
+
 body {
-	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-style: normal;
-    font-variant-ligatures: normal;
-    font-variant-caps: normal;
-    font-variant-numeric: normal;
-    font-weight: 300;
-    font-stretch: normal;
-    font-size: 14px;
-    line-height: 1.4em;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	color: #4d4d4d;
-	background: #f5f5f5;
-	line-height: 1.4em;
-	margin: 0 auto;
-	padding: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.4em;
+  color: $general-color;
+  background: #f5f5f5;
+  margin: 0 auto;
+  padding: 0;
   min-width: 230px;
   max-width: 550px;
-  font-weight: 300;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -43,56 +40,48 @@ h1 {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 24px;
+  font-size: $general-font-size;
 }
 
 .change-input {
   background-color: transparent;
-  outline: none;
   font-family: inherit;
-  font-size: 24px;
-  line-height: 30px;
-  padding: 15px 60px 15px 15px;
-  margin-left: 45px;
+  border: 1px dashed #d9d9d9;
+  outline: none;
+  font-size: inherit;
+  font-weight: 300;
+  padding: 14px 60px 14px 14px;
+  margin-left: $item-margin-left;
   position: relative;
-  color: inherit;
+  color: #1b1b1b;
   width: 427px;
 }
-
-.change-input:required:focus {
-  border: none;
-  outline: none;
-}
-
 .main-list li .check-input {
   position: absolute;
   height: 40px;
   cursor: pointer;
   top: 6px;
   -webkit-appearance: none;
-}
-
-.main-list li .check-input:after {
-  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
-}
-
-.main-list li .check-input:checked:after {
-  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
+  &:after {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
+  }
+  &:checked:after {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
+  }
 }
 
 .item-label {
   white-space: pre-line;
   word-break: break-all;
   padding: 15px 60px 15px 15px;
-  margin-left: 45px;
+  margin-left: $item-margin-left;
   display: block;
   line-height: 1.2;
   transition: color 0.4s;
   position: relative;
-  font-size: 24px;
+  font-size: $general-font-size;
   border-bottom: 1px solid #ededed;
 }
-
 button {
   margin: 0;
   padding: 0;
@@ -111,13 +100,14 @@ button {
   display: inline-block;
 }
 
-li:hover .close {
-  display: inline-block;
-  color: #af5b5e;
-}
-
-li:hover .close-editing {
-  display: none;
+li:hover {
+  .close {
+    display: inline-block;
+    color: #af5b5e;
+  }
+  .close-editing {
+    display: none;
+  }
 }
 
 .close {
@@ -133,10 +123,9 @@ li:hover .close-editing {
   font-size: 30px;
   color: #cc9a9a;
   transition: color 0.2s ease-out;
-}
-
-.close:after {
-  content: '×';
+  &:after {
+    content: '×';
+  }
 }
 
 li div {
@@ -151,14 +140,14 @@ li div {
   position: relative;
   margin: 0;
   width: 100%;
-  font-size: 24px;
+  font-size: $general-font-size;
   font-family: inherit;
   font-weight: inherit;
   line-height: 1.4em;
   box-sizing: border-box;
   outline: none;
   -webkit-font-smoothing: antialiased;
-  color: #4d4d4d;
+  color: $general-color;
 }
 
 .push-input:-moz-placeholder,
@@ -168,7 +157,6 @@ li div {
   color: #d9d9d9;
   font-style: italic;
 }
-
 .filter-footer {
   color: #777;
   padding: 10px 15px;
@@ -184,10 +172,9 @@ li div {
   position: absolute;
   right: 0;
   left: 0;
-}
-
-.filters li {
-  display: inline;
+  li {
+    display: inline;
+  }
 }
 
 .filter-div-item {
