@@ -31,7 +31,7 @@ export default class TodoItem extends React.Component {
     let handleCompleteItem = this.props.handleCompleteTask
 
     let taskElement = (
-      <li>
+      <li className='todo-item'>
         <div className={taskElementClasses}
              onDoubleClick={onTaskToggleEdit}>
           <input className='check-input'
@@ -45,7 +45,7 @@ export default class TodoItem extends React.Component {
       </li>
     )
     let inputElement = (
-      <li>
+      <li className='todo-item'>
         <div className='item'
              onDoubleClick={onTaskToggleEdit}>
           <input className='check-input'
